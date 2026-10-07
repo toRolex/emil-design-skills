@@ -8,45 +8,55 @@
 npx skills@latest add toRolex/emil-design-skills
 ```
 
-## 按场景怎么用
+## 什么时候用什么技能
 
 **以下分组与推荐顺序是本镜像的归纳，不是上游规定的统一流程。** 不必把所有技能串起来；根据当前问题选用即可。
 
-| 场景 | 技能 | 用法 |
+先分清两种调用方式（由技能自带的 frontmatter 元数据决定，装到遵守该元数据的 Agent 才生效）：
+
+- **可被模型自动调用**（11 个）：技能描述里写了触发条件，任务匹配时允许模型自行调用，但不保证一定触发。
+- **需要显式调用**（3 个）：上游设置了 `disable-model-invocation: true`，在遵守该元数据的 Agent 中模型不会自动触发，要用时主动点名；具体入口以所用工具为准。
+
+### 动画
+
+| 技能 | 调用方式 | 什么时候用 |
 | --- | --- | --- |
-| 日常界面与动画决策 | `emil-design-eng` | 独立可用；作为通用设计工程指导 |
-| 把动画需求说清楚 | `animation-vocabulary` | 独立可用；先明确运动、节奏和过渡的表达 |
-| Apple 风格设计原则 | `apple-design` | 独立可用；将 Apple 的设计与流畅动效原则用于 Web |
-| Swift 开发 | `write-swift` | 独立可用；现代 Swift、并发、性能与测试 |
-| Sonner 提示组件 | `ask-sonner` | 独立可用；安装、样式、常见用法与排错 |
-| 手机上的 Web 体验 | `mobile-native` | 独立可用；修复触摸、视口、安全区等细节 |
-| 选择 UI 依赖 | `pick-ui-library` | 独立可用，需显式调用；先选合适的库，避免重复造轮子 |
-| 极端数据压测 | `break-ui` | 独立可用；用长文本、空列表、大数字等尝试破坏界面 |
-| 探索多个 UI 方向 | `prototype` | 需显式调用；生成不同方案，通过切换器比较与选择 |
+| `animate` | 模型自动 | 从零构建 Web 动画时：该不该动、选曲线/时长/属性、处理中断与退出，直接产出实现 |
+| `animate-expo` | 模型自动 | 同样的标准用在 React Native / Expo：手势、面板、触感反馈，且动画不占 JS 线程 |
+| `find-animation-opportunities` | 模型自动 | 不知道哪里值得加动效时：找出该动的位置，同时明确列出不该动的拒绝清单 |
+| `improve-animations` | 模型自动 | 已有动画质量参差时：审计全代码库，产出按优先级排列、任何 Agent 都能执行的实施计划 |
+| `review-animations` | **显式** | 动画做完要验收时：按十条不可协商标准评审 diff，给出 Block / Approve 结论 |
+| `animation-vocabulary` | 模型自动 | 说不清想要什么效果时：把「弹一下的那种」翻译成精确的动画术语，再交给其他动画技能 |
 
-### 动画闭环：找机会 → 定计划 → 实现 → 复核
+### 界面与设计
 
-推荐组合顺序：
+| 技能 | 调用方式 | 什么时候用 |
+| --- | --- | --- |
+| `emil-design-eng` | 模型自动 | 核心技能：日常 UI 打磨、组件设计、动画决策哲学；评审界面时的默认入口 |
+| `apple-design` | 模型自动 | 想要 Apple 质感时：把 WWDC 设计演讲（spring、直接操纵、材质）的原则用到 Web 上 |
+| `prototype` | **显式** | 方案拿不定时：把一段 UI 描述做成多个真正不同的变体，用切换器现场比较选型 |
+| `pick-ui-library` | **显式** | 要选 UI 依赖时：从作者信赖的库清单（base-ui、cmdk、Sonner 等）里选，不让 AI 手写组件 |
+| `break-ui` | 模型自动 | 上线前压测时：用最坏情况的真实数据（超长姓名、空列表、非拉丁文字）喂 UI，报告哪里坏 |
+| `mobile-native` | 模型自动 | Web 应用在手机上「感觉不对」时：修复 sticky hover、100vh、输入缩放、安全区等平台层细节 |
 
-```text
-find-animation-opportunities
-  → improve-animations
-  → animate（Web）或 animate-expo（React Native / Expo）
-  → review-animations
+### 专项工具
+
+| 技能 | 调用方式 | 什么时候用 |
+| --- | --- | --- |
+| `ask-sonner` | 模型自动 | 用到 Sonner（作者的 toast 库）时：接入、选调用方式、样式阶梯与排障 |
+| `write-swift` | 模型自动 | 写或评审 Swift 时：值类型、Swift 6 并发、泛型、性能与 Swift Testing |
+
+### 调用顺序
+
+```mermaid
+graph LR
+    F[find-animation-opportunities] --> I[improve-animations]
+    I --> A["animate / animate-expo"]
+    A --> R[review-animations]
+    A -. 需要组件时 .-> P[pick-ui-library]
 ```
 
-- `find-animation-opportunities`：找出值得加入动效的位置，同时明确哪些地方不该动。
-- `improve-animations`：审计已有动画，产出按优先级排列、可独立执行的改进计划。
-- `animate` / `animate-expo`：分别负责 Web 与 React Native / Expo 的动画实现。
-- `review-animations`：严格复核动画，需要显式调用。
-
-这是一条推荐工作路径，不要求每次从头走完。已有明确动画需求可从实现开始；只想审查已有动画可直接调用复核。
-
-**`animate` 硬依赖 `pick-ui-library` 的场景**：当任务需要 toast、drawer、command menu、dropdown 等组件，而不只是动画时，上游明确要求停下来调用 `pick-ui-library`，先选对组件库；此时不可跳过。单纯的动画任务不要求一律调用它。
-
-### 需要显式调用的 3 个技能
-
-`review-animations`、`pick-ui-library`、`prototype` 在上游设置了 `disable-model-invocation: true`，不会由模型自行触发。使用时主动点名调用；具体入口以所用工具为准。
+其余技能均可独立使用，按当前问题选用即可。
 
 ---
 
