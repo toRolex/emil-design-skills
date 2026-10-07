@@ -1,6 +1,6 @@
 # Emil 设计技能集 · 中文导读
 
-本仓库是 [Emil Kowalski 设计技能集](https://github.com/emilkowalski/skills)的个人镜像。收录 14 个技能，帮助设计师与工程师把界面、动画和移动端体验做得更好。技能内容保持上游原样；下半部分是上游 README 的中文译文，英文原文见 [README.en.md](./README.en.md)。
+本仓库是 [Emil Kowalski 设计技能集](https://github.com/emilkowalski/skills)的个人镜像。收录 14 个技能，帮助设计师与工程师把界面、动画和移动端体验做得更好。技能内容保持上游原样（仅 `prototype` 因与其他技能集重名，改名为 `emil-prototype`）；下半部分是上游 README 的中文译文，英文原文见 [README.en.md](./README.en.md)。
 
 ## 安装
 
@@ -34,7 +34,7 @@ npx skills@latest add toRolex/emil-design-skills
 | --- | --- | --- |
 | `emil-design-eng` | 模型自动 | 核心技能：日常 UI 打磨、组件设计、动画决策哲学；评审界面时的默认入口 |
 | `apple-design` | 模型自动 | 想要 Apple 质感时：把 WWDC 设计演讲（spring、直接操纵、材质）的原则用到 Web 上 |
-| `prototype` | **显式** | 方案拿不定时：把一段 UI 描述做成多个真正不同的变体，用切换器现场比较选型 |
+| `emil-prototype` | **显式** | 方案拿不定时：把一段 UI 描述做成多个真正不同的变体，用切换器现场比较选型 |
 | `pick-ui-library` | **显式** | 要选 UI 依赖时：从作者信赖的库清单（base-ui、cmdk、Sonner 等）里选，不让 AI 手写组件 |
 | `break-ui` | 模型自动 | 上线前压测时：用最坏情况的真实数据（超长姓名、空列表、非拉丁文字）喂 UI，报告哪里坏 |
 | `mobile-native` | 模型自动 | Web 应用在手机上「感觉不对」时：修复 sticky hover、100vh、输入缩放、安全区等平台层细节 |
@@ -116,7 +116,7 @@ Agent 的品味并不出色。
 - **[apple-design](./skills/apple-design/SKILL.md)** — 从 Apple 的 WWDC 设计演讲中提炼界面设计与流畅动效原则，并转化为适用于 Web 的指导。
 - **[write-swift](./skills/write-swift/SKILL.md)** — 编写现代 Swift，涵盖值类型、Swift 6 并发、泛型、性能和 Swift Testing。
 - **[pick-ui-library](./skills/pick-ui-library/SKILL.md)** — 让 Agent 根据我使用并信赖的库为任务选择合适的依赖，而不是让 AI 手写 toast 组件或安装无人维护的包。
-- **[prototype](./skills/prototype/SKILL.md)** — 为你描述的 UI 部分构建多个不同版本，并通过切换器逐一比较。
+- **[emil-prototype](./skills/emil-prototype/SKILL.md)** — 为你描述的 UI 部分构建多个不同版本，并通过切换器逐一比较。
 - **[mobile-native](./skills/mobile-native/SKILL.md)** — 让 Web 应用在手机上拥有原生感：修复悬停状态残留、点击高亮闪烁、100vh 问题、输入框导致页面缩放、点击延迟、安全区，以及其他区分网站与应用的小细节。
 - **[break-ui](./skills/break-ui/SKILL.md)** — 用最糟糕的数据尝试破坏你构建的 UI：长姓名、特殊邮箱、单字姓名、巨大计数、空列表、长标签。
 - **[ask-sonner](./skills/ask-sonner/SKILL.md)** — 使用我的 toast 库 [Sonner](https://sonner.emilkowal.ski) 的指南，包含设置、样式、常见用法，以及最常见问题的修复方法。

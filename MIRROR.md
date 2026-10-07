@@ -11,6 +11,13 @@
 
 `skills/`、`.pl`、`performance-cheatsheet.md` 等上游文件保持原样。英文 README 完整存于 `README.en.md`。
 
+### 与上游的命名偏差
+
+上游技能 `prototype` 与本地其他技能集重名，在本镜像中改名为 `emil-prototype`（目录 `skills/emil-prototype/` 与 frontmatter `name` 均已改），上游 SKILL.md 正文未动。同步上游时：
+
+1. 若上游更新了该技能，把改动合入 `skills/emil-prototype/`，不要恢复原名。
+2. 其他技能的 SKILL.md 中对 `prototype` 的交叉引用（如 `break-ui`）保持上游原文，不改。
+
 ## 同步方法
 
 始终**先更新并推送 `upstream` 分支，再合并进 `main`**。以下命令用于普通 Git 工作流；若本地已接入 jj，则用对应的 fetch、bookmark 与 merge 操作，避免混用修改历史的工具。
